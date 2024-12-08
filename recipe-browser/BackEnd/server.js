@@ -7,12 +7,17 @@ app.get('/', (req, res) => {
 });
 
 app.get('/browse', (req, res) => {
-    res.send('Home Page');
+    res.send('Browse');
 });
 
 app.get('/post', (req, res) => {
-    res.send('Home Page');
+    res.send('Post');
 });
+
+app.get('/signIn', (req, res) => {
+    res.send('Sign in');
+});
+
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
