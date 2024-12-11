@@ -1,17 +1,21 @@
-import './App.css';
 import NavigationBar from './Components/NavigationBar';
+import Home from './Components/Home';
+import Browse from './Components/Browse';
+import Post from './Components/Post';
+import SignIn from './Components/SignIn';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (
     <Router>
       <NavigationBar/>
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
-        <Route path="/browse" element={<h1>Browse</h1>} />
-        <Route path="/post" element={<h1>Post</h1>} />
-        <Route path='/signIn' element={<h1>Sign In</h1>} />
+        <Route path="/" element={<Home/>} />
+        <Route path="/browse" element={<Browse/>} />
+        <Route path="/post" element={<Post/>} />
+        <Route path='/signIn' element={<SignIn/>} />
       </Routes>
     </Router>
   );

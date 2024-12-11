@@ -1,23 +1,38 @@
 const express = require('express');
 const app = express();
 const port = 4000;
+const cors = require('cors');
+app.use(cors());
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-    res.send('Home Page');
+//Connecting to MongoDatabase
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://admin:admin@recipebrowser.r4ajv.mongodb.net/?retryWrites=true&w=majority&appName=RecipeBrowser');
+
+const recipeSchema = new mongoose.Schema({
+    name: String,
+    time: String,
+    ingredients: String,
+    instructions: String
 });
 
-app.get('/browse', (req, res) => {
-    res.send('Browse');
+const Recipe = mongoose.model('Recipe', recipeSchema)
+
+app.post('api/recipes', async (req,res)=>{
+    const {name, time, ingredients, instructions} = req.body;
+
+    const newRecipe = new Recipe({name, time, ingredients, instructions});
+    await newRecipe.save();
+
+    res.status(201).json({ message: 'Recipe Added', recipe: newRecipe });
 });
 
-app.get('/post', (req, res) => {
-    res.send('Post');
+app.get('api/recipes', async(req, res)=>{
+    const recipes = await Recipe.find({});
+    res.json(recipes);
 });
-
-app.get('/signIn', (req, res) => {
-    res.send('Sign in');
-});
-
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
